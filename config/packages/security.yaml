@@ -1,0 +1,48 @@
+security:
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    # Staff-leden komen uit de database (table staff_user), opgehaald op e-mailadres.
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    # https://symfony.com/doc/current/security.html#the-firewall
+    # Note: Only the *first* matching rule is applied
+    access_control:
+        - { path: '^/(?:nl/|en/|de/|fr/|it/)?dashboard(?:/|$)', roles: ROLE_STAFF }
+        - { path: '^/(?:nl/|en/|de/|fr/|it/)?login$', roles: PUBLIC_ACCESS }
+
+    firewalls:
+        dev:
+            # Zet dev-tools en statische assets altijd vrij
+            pattern: ^/(_profiler|_wdt)/
+            security: false
+        main:
+            lazy: true
+            provider: app_user_provider
+
+            # Personeel logt in met e-mail + wachtwoord via het loginformulier.
+            form_login:
+                enable_csrf: true
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_home
+
+            logout:
+                path: app_logout
+                target: app_home
+
+when@test:
+    security:
+        password_hashers:
+            # Pw-hashers zijn bewust kostbaar; in tests houden we ze laag voor snelheid.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon

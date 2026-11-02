@@ -1,0 +1,94 @@
+<section class="section floor-plan" aria-labelledby="floor-plan-heading">
+    <div class="container">
+        <span class="section-kicker text-center">{{ 'floor_plan.kicker'|trans }}</span>
+        <h2 class="section-title" id="floor-plan-heading">{{ 'floor_plan.title'|trans }}</h2>
+        <p class="section-intro">{{ 'floor_plan.intro'|trans }}</p>
+
+        {% if floorPlan is empty %}
+            <p class="text-center muted">{{ 'floor_plan.empty'|trans }}</p>
+        {% else %}
+            <figure class="floor-plan__figure">
+                <p class="floor-plan__scroll-hint">{{ 'floor_plan.scroll'|trans }}</p>
+                <div class="floor-plan__viewport" role="region" tabindex="0" aria-label="{{ 'floor_plan.scroll'|trans }}">
+                    <svg class="floor-plan__drawing" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <defs>
+                            <pattern id="floor-tiles" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M40 0H0V40" fill="none" stroke="#d8cbb8" stroke-width="1" opacity=".55"/>
+                            </pattern>
+                            <pattern id="terrace-boards" width="30" height="30" patternUnits="userSpaceOnUse">
+                                <path d="M0 0H30" fill="none" stroke="#c5d0ba" stroke-width="2" opacity=".65"/>
+                            </pattern>
+                            <g id="floor-plant">
+                                <circle r="24" fill="#d5ba8e"/>
+                                <circle r="17" fill="#5a8061"/>
+                                <path d="M0 12C-15 3-13-10-4-15M0 12C15 3 13-10 4-15M0 12V-17" fill="none" stroke="#a8c296" stroke-width="3" stroke-linecap="round"/>
+                            </g>
+                        </defs>
+
+                        <rect width="1000" height="620" rx="25" fill="#f7f0e5"/>
+                        <rect x="25" y="25" width="630" height="570" rx="18" fill="#fffaf0" stroke="#a98d71" stroke-width="4"/>
+                        <rect x="27" y="27" width="626" height="566" rx="16" fill="url(#floor-tiles)"/>
+                        <rect x="680" y="25" width="295" height="570" rx="18" fill="#e5eddb" stroke="#9bb291" stroke-width="4"/>
+                        <rect x="682" y="27" width="291" height="566" rx="16" fill="url(#terrace-boards)"/>
+
+                        <circle cx="72" cy="76" r="8" fill="#c0562a"/>
+                        <text x="92" y="83" class="floor-plan__zone">{{ 'floor_plan.inside'|trans }}</text>
+                        <circle cx="725" cy="76" r="8" fill="#5a8061"/>
+                        <text x="745" y="83" class="floor-plan__zone">{{ 'floor_plan.outside'|trans }}</text>
+
+                        <rect x="72" y="122" width="470" height="68" rx="12" fill="#d7b58a" stroke="#b08b60" stroke-width="2"/>
+                        <rect x="82" y="130" width="450" height="50" rx="7" fill="#f2e3cc"/>
+                        <text x="307" y="161" class="floor-plan__fixture" text-anchor="middle">{{ 'floor_plan.counter'|trans }}</text>
+                        <path d="M101 146h14v11a7 7 0 0 1-14 0zm14 2h5a5 5 0 0 1-5 7" fill="none" stroke="#a47a51" stroke-width="2"/>
+                        <path d="M492 146h14v11a7 7 0 0 1-14 0zm14 2h5a5 5 0 0 1-5 7" fill="none" stroke="#a47a51" stroke-width="2"/>
+
+                        <use href="#floor-plant" x="605" y="85"/>
+                        <use href="#floor-plant" x="721" y="544"/>
+                        <use href="#floor-plant" x="934" y="120"/>
+                        <path d="M655 335h-4v-75h4M680 260h-4v75h4" stroke="#f7f0e5" stroke-width="8"/>
+                        <path d="M655 335v-75l45 44" fill="none" stroke="#9bb291" stroke-width="2"/>
+                        <path d="M255 595h86" stroke="#f7f0e5" stroke-width="8"/>
+                        <path d="M255 595v-66a66 66 0 0 1 66 66" fill="none" stroke="#a98d71" stroke-width="2"/>
+                        <text x="374" y="574" class="floor-plan__fixture">{{ 'floor_plan.entrance'|trans }}</text>
+
+                        {% for table in floorPlan %}
+                            <g transform="translate({{ table.x }} {{ table.y }})" data-table-number="{{ table.number }}" data-capacity="{{ table.capacity }}">
+                                {% if table.capacity <= 10 %}
+                                    {% for seat in 1..table.capacity %}
+                                        <g transform="rotate({{ 360 / table.capacity * loop.index0 }})">
+                                            <rect x="-11" y="-63" width="22" height="15" rx="5" fill="{{ table.area == 'inside' ? '#b76542' : '#668867' }}"/>
+                                        </g>
+                                    {% endfor %}
+                                {% endif %}
+                                <circle cy="3" r="43" fill="#95775b" opacity=".18"/>
+                                <circle r="43" fill="{{ table.area == 'inside' ? '#fffaf2' : '#f7fbef' }}" stroke="{{ table.area == 'inside' ? '#c59068' : '#84a380' }}" stroke-width="3"/>
+                                <text y="0" class="floor-plan__number" text-anchor="middle">{{ table.number }}</text>
+                                <text y="20" class="floor-plan__seats" text-anchor="middle">{{ table.capacity }} {{ (table.capacity == 1 ? 'floor_plan.seat' : 'floor_plan.seats')|trans }}</text>
+                            </g>
+                        {% endfor %}
+                    </svg>
+                </div>
+
+                <figcaption class="floor-plan__caption">
+                    <div class="floor-plan__key">
+                        {% for area in ['inside', 'outside'] %}
+                            {% set areaTables = floorPlan|filter(table => table.area == area) %}
+                            {% if areaTables is not empty %}
+                                <div>
+                                    <h3>{{ ('floor_plan.' ~ area)|trans }}</h3>
+                                    <ul>
+                                        {% for table in areaTables %}
+                                            <li><span>{{ 'floor_plan.table_number'|trans({'%number%': table.number}) }}</span><strong>{{ table.capacity }} {{ (table.capacity == 1 ? 'floor_plan.seat' : 'floor_plan.seats')|trans }}</strong></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% if otherTables %}<p class="floor-plan__note">{{ 'floor_plan.other_tables'|trans }}</p>{% endif %}
+                    <p class="floor-plan__note">{{ 'floor_plan.availability'|trans }} <a href="{{ path('reservation_new') }}">{{ 'home.how_book'|trans }}</a></p>
+                </figcaption>
+            </figure>
+        {% endif %}
+    </div>
+</section>

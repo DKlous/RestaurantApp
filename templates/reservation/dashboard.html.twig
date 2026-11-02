@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'staff.reservations'|trans }} — {{ restaurant.name }}{% endblock %}
+
+{% macro statusBadge(status) %}
+    {% set map = {
+        'pending': ['status.pending', 'badge--pending'],
+        'confirmed': ['status.confirmed', 'badge--confirmed'],
+        'cancelled': ['status.cancelled', 'badge--cancelled']
+    } %}
+    {% set entry = map[status] ?? ['status.unknown', ''] %}
+    <span class="badge {{ entry[1] }}">{{ entry[0]|trans }}</span>
+{% endmacro %}
+
+{% block body %}
+    {% import _self as status %}
+    <section class="section">
+        <div class="container">
+            <div class="dashboard-heading">
+                <div>
+                    <span class="section-kicker">{{ 'staff.label'|trans }} · {{ app.user.email }}</span>
+                    <h1>{{ 'staff.reservations'|trans }}</h1>
+                    <p class="muted">{{ 'staff.dashboard_intro'|trans }}</p>
+                </div>
+                <div class="form-actions">
+                    <a class="btn" href="{{ path('reservation_create') }}">+ {{ 'staff.book_table'|trans }}</a>
+                    <a class="btn btn--ghost" href="{{ path('app_logout') }}">{{ 'nav.logout'|trans }}</a>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat"><div class="stat__value">{{ reservations|length }}</div><div class="stat__label">{{ 'staff.total'|trans }}</div></div>
+                <div class="stat"><div class="stat__value" style="color:var(--warning)">{{ reservations|filter(r => r.status == 'pending')|length }}</div><div class="stat__label">{{ 'status.pending'|trans }}</div></div>
+                <div class="stat"><div class="stat__value" style="color:var(--success)">{{ reservations|filter(r => r.status == 'confirmed')|length }}</div><div class="stat__label">{{ 'status.confirmed'|trans }}</div></div>
+                <div class="stat"><div class="stat__value" style="color:var(--danger)">{{ reservations|filter(r => r.status == 'cancelled')|length }}</div><div class="stat__label">{{ 'status.cancelled'|trans }}</div></div>
+            </div>
+
+            {% if reservations is empty %}
+                <div class="card empty">
+                    <div class="empty__icon" aria-hidden="true">☕</div>
+                    <h2>{{ 'staff.empty'|trans }}</h2>
+                    <p class="muted">{{ 'staff.empty_text'|trans }}</p>
+                    <a class="btn" href="{{ path('reservation_create') }}">{{ 'staff.book_table'|trans }}</a>
+                </div>
+            {% else %}
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>{{ 'staff.table'|trans }}</th><th>{{ 'staff.guests'|trans }}</th><th>{{ 'staff.date'|trans }}</th><th>{{ 'staff.time'|trans }}</th><th>{{ 'staff.duration'|trans }}</th><th>{{ 'staff.status'|trans }}</th><th>{{ 'staff.change_status'|trans }}</th></tr></thead>
+                        <tbody>
+                        {% for reservation in reservations %}
+                            <tr>
+                                <td class="num"><a href="{{ path('reservation_show', {id: reservation.id}) }}">{{ reservation.id }}</a></td>
+                                <td>{{ reservation.table.name }}</td>
+                                <td>{{ reservation.guests }}</td>
+                                <td>{{ reservation.date|date('d-m-Y') }}</td>
+                                <td>{{ reservation.time|date('H:i') }}</td>
+                                <td>{{ reservation.durationMinutes }} min</td>
+                                <td>{{ status.statusBadge(reservation.status) }}</td>
+                                <td>
+                                    <form class="status-form" method="post" action="{{ path('reservation_set_status', {id: reservation.id}) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('reservation_status_' ~ reservation.id) }}">
+                                        <label class="visually-hidden" for="status-{{ reservation.id }}">{{ 'staff.reservation_status'|trans({'%id%': reservation.id}) }}</label>
+                                        <select id="status-{{ reservation.id }}" name="status">
+                                            <option value="pending" {{ reservation.status == 'pending' ? 'selected' }}>{{ 'status.pending'|trans }}</option>
+                                            <option value="confirmed" {{ reservation.status == 'confirmed' ? 'selected' }}>{{ 'status.confirmed'|trans }}</option>
+                                            <option value="cancelled" {{ reservation.status == 'cancelled' ? 'selected' }}>{{ 'status.cancelled'|trans }}</option>
+                                        </select>
+                                        <button class="btn btn--ghost btn--sm" type="submit">{{ 'staff.change'|trans }}</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,140 @@
+restaurant:
+    short: 'Café · restaurant · 24/7'
+    tagline: 'Coffee, panini and other favourites — day and night'
+    about: 'At De Gouden Lepel, enjoy coffee, panini, snacks, pizza and pasta at any time.'
+    contact_note: 'This demonstration number is not verified and must be replaced. The exact location at Schiphol has not yet been confirmed.'
+    open_24: 'Open 24 hours'
+days: { monday: Monday, tuesday: Tuesday, wednesday: Wednesday, thursday: Thursday, friday: Friday, saturday: Saturday, sunday: Sunday }
+nav:
+    skip: 'Skip to content'
+    home: Home
+    menu: Menu
+    reserve: Reservations
+    dashboard: Dashboard
+    login: 'Staff login'
+    logout: 'Log out'
+    language: Language
+    main: 'Main navigation'
+    toggle: 'Open and close menu'
+flash:
+    success: Success
+    error: Problem
+    notice: Notice
+    close: 'Close notification'
+    reserved: 'The table is reserved for this time slot.'
+    status_changed: 'Reservation %id% is now %status%.'
+footer:
+    links: Explore
+    visit: 'Visit & contact'
+    location: Location
+    phone: Phone
+    email: Email
+    rights: 'All rights reserved.'
+    made: 'Made with'
+home:
+    description: 'Coffee, panini, snacks, pizza and pasta at De Gouden Lepel. Open day and night.'
+    kicker: 'Café · restaurant · Schiphol Airport · 24/7'
+    hero: 'Coffee, panini and something tasty — day and night.'
+    view_menu: 'View the menu'
+    open: 'Open day and night'
+    about: 'About us'
+    about_title: 'There is always time for a treat'
+    coffee_title: 'Coffee whenever you want it'
+    coffee_text: 'Start your day with fresh coffee or warm up with a cup in the middle of the night.'
+    snack_title: 'Panini & snacks'
+    snack_text: 'A quick bite or a generously filled panini: there is always something for you.'
+    meal_title: 'Pizza, pasta & more'
+    meal_text: 'Join us for a warm meal at any time of day.'
+    kitchen: 'From our kitchen'
+    favorites: 'A few favourites'
+    menu_empty: 'The menu is being updated. Feel free to visit us.'
+    view_all: 'View the full menu'
+    where: 'Where & when'
+    contact_title: 'Open 24/7 & contact'
+    every_day: 'Every day, day and night'
+    table: 'Arrange a table'
+    how_book: 'How to book'
+floor_plan:
+    kicker: 'Find your spot'
+    title: 'A look around our café'
+    intro: 'Find a table inside or settle in on the terrace.'
+    inside: Inside
+    outside: Terrace
+    counter: 'Coffee bar'
+    entrance: Entrance
+    table_number: 'Table %number%'
+    seat: seat
+    seats: seats
+    scroll: 'Scroll sideways to see the whole floor plan.'
+    empty: 'Ask our team about the tables.'
+    other_tables: 'Ask our team about other tables.'
+    availability: 'Call us to check availability and reserve a table.'
+call:
+    title: 'Book by phone'
+    description: 'Book by phone at %name%. We are open 24 hours a day, 7 days a week.'
+    open: 'Open 24 hours · 7 days a week'
+    heading: 'Want to book a table? We are happy to help.'
+    intro: 'A staff member will discuss your visit and record the table and time slot.'
+    unavailable: 'The phone number is currently unavailable.'
+    phone: 'Call %phone%'
+    how: 'How it works'
+    steps: 'Three simple steps'
+    step1: 'Call us'
+    step1_text: 'Tell us when you would like to visit and how many guests are coming.'
+    step2: 'Choose a table'
+    step2_text: 'A staff member selects an available table suitable for your party.'
+    step3: 'We record your reservation'
+    step3_text: 'The team records the table number and time slot.'
+    menu_hint: 'Would you rather see the menu first?'
+login:
+    title: 'Login — Staff'
+    welcome: 'Welcome back'
+    intro: 'Log in to manage reservations.'
+    password: Password
+    submit: 'Log in'
+    hint: 'No login details? Ask the restaurant administrator.'
+status: { pending: Pending, confirmed: Reserved, cancelled: Cancelled, unknown: Unknown }
+staff:
+    label: Staff
+    reservations: Reservations
+    reservation: Reservation
+    dashboard_intro: 'View table occupancy and manage the status of each booking.'
+    book_table: 'Reserve a table'
+    total: Total
+    empty: 'No reservations yet'
+    empty_text: 'Phone bookings appear here once recorded.'
+    table: Table
+    choose_table: 'Choose a table'
+    guests: Guests
+    date: Date
+    time: Time
+    start_time: 'Start time'
+    duration: Duration
+    duration_label: 'Duration (minutes)'
+    status: Status
+    change_status: 'Change status'
+    reservation_status: 'Status of reservation %id%'
+    change: Change
+    details: 'Staff · reservation details'
+    minutes: '%count% minutes'
+    back: 'Back to dashboard'
+    new: 'New reservation'
+    new_kicker: 'Staff · new reservation'
+    new_intro: 'Enter the phone booking. Saving reserves the table immediately for this time slot.'
+    check: 'Check the reservation:'
+    duration_hint: 'Default 90 minutes; maximum 24 hours.'
+    good_to_know: 'Good to know'
+    availability: 'Availability is checked'
+    availability_text: 'The table is confirmed immediately and blocked for the entire selected period, including across midnight.'
+    change_text: 'You can cancel or change a reservation later in the dashboard. Adjacent time slots are allowed.'
+    hours_text: 'We are open 24/7; there are no restrictions on reservation times.'
+errors:
+    duration: 'The reservation must last between 15 minutes and 24 hours.'
+    unavailable: 'This table is unavailable.'
+    past: 'The date and time cannot be in the past.'
+    overlap: 'This table is already reserved around %time%.'
+    choose_table: 'Choose a table.'
+    guests_required: 'Enter the number of guests.'
+    capacity: 'The number of guests (%guests%) must be between 1 and %capacity% for this table.'
+    choose_before_save: 'Choose a table before saving the reservation.'
+    no_table: 'This reservation has no table.'

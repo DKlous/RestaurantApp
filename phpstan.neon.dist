@@ -1,0 +1,18 @@
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+    # Migraties worden via Doctrine gecontroleerd; PHPStan analyseert de SQL niet.
+    excludePaths:
+        - src/Migrations/
+    bootstrapFiles:
+        - vendor/autoload.php
+
+    # Bekende level-max+Doctrine-ruijs: de @id-eigenschap wordt via
+    # reflection door Doctrine aangevuld (niet zichtbaar voor PHPStan).
+    # Alleen $id-ruijs wordt genegeerd; de rest blijft strikt.
+    ignoreErrors:
+        -
+            identifier: property.unusedType
+            message: '#\$id\b#'

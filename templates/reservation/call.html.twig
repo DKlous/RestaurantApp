@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'call.title'|trans }} — {{ restaurant.name }}{% endblock %}
+{% block description %}
+    <meta name="description" content="{{ 'call.description'|trans({'%name%': restaurant.name}) }}">
+{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container reservation-call">
+            <div class="reservation-call__panel">
+                <span class="section-kicker">{{ 'call.open'|trans }}</span>
+                <h1>{{ 'call.heading'|trans }}</h1>
+                <p>{{ (restaurant.phone ? 'call.intro' : 'call.unavailable')|trans }}</p>
+                {% if restaurant.phone %}<a class="btn reservation-call__button" href="tel:{{ restaurant.phone|replace({' ': '', '-': '', '(': '', ')': ''}) }}">
+                    {{ 'call.phone'|trans({'%phone%': restaurant.phone}) }}
+                    <span aria-hidden="true">↗</span>
+                </a>{% endif %}
+            </div>
+
+            <aside class="card reservation-call__steps">
+                <span class="section-kicker">{{ 'call.how'|trans }}</span>
+                <h2>{{ 'call.steps'|trans }}</h2>
+                <ol class="call-steps">
+                    <li><span class="call-steps__number">1</span><span><strong>{{ 'call.step1'|trans }}</strong><br>{{ 'call.step1_text'|trans }}</span></li>
+                    <li><span class="call-steps__number">2</span><span><strong>{{ 'call.step2'|trans }}</strong><br>{{ 'call.step2_text'|trans }}</span></li>
+                    <li><span class="call-steps__number">3</span><span><strong>{{ 'call.step3'|trans }}</strong><br>{{ 'call.step3_text'|trans }}</span></li>
+                </ol>
+                <p class="muted">{{ 'call.menu_hint'|trans }} <a href="{{ path('menu') }}">{{ 'home.view_menu'|trans }}</a>.</p>
+            </aside>
+        </div>
+    </section>
+{% endblock %}

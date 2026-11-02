@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ restaurant.name }} — {{ restaurant.tagline|trans }}{% endblock %}
+{% block description %}
+    <meta name="description" content="{{ 'home.description'|trans }}">
+{% endblock %}
+
+{% block body %}
+
+    {# ---------- Hero ---------- #}
+    <section class="hero">
+        <div class="container hero__inner">
+            <div class="hero__content">
+                <span class="section-kicker">{{ 'home.kicker'|trans }}</span>
+                <h1>{{ 'home.hero'|trans }}</h1>
+                <p class="hero__lead">{{ restaurant.about|trans }}</p>
+                <div class="hero__actions">
+                    <a class="btn" href="{{ path('reservation_new') }}">
+                        {{ 'nav.reserve'|trans }}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                    <a class="btn btn--secondary" href="{{ path('menu') }}">{{ 'home.view_menu'|trans }}</a>
+                </div>
+            </div>
+            <div class="hero__art" aria-hidden="true">
+                <img class="hero__flight" src="/images/flight-path.svg" alt="" width="160" height="120">
+                <div class="hero__image-frame">
+                    <img src="/images/hero-coffee.jpg" alt="" width="1100" height="1100" fetchpriority="high">
+                </div>
+                <span class="hero__badge">{{ 'home.open'|trans }}</span>
+            </div>
+        </div>
+    </section>
+
+    {# ---------- Over ons ---------- #}
+    <section class="section home-about">
+        <div class="container">
+            <span class="section-kicker text-center">{{ 'home.about'|trans }}</span>
+            <h2 class="section-title">{{ 'home.about_title'|trans }}</h2>
+            <p class="section-intro">{{ restaurant.about|trans }}</p>
+
+            <div class="grid grid--3">
+                <div class="card feature">
+                    <div class="feature__icon" aria-hidden="true">👨‍🍳</div>
+                    <div>
+                        <h3>{{ 'home.coffee_title'|trans }}</h3>
+                        <p>{{ 'home.coffee_text'|trans }}</p>
+                    </div>
+                </div>
+                <div class="card feature">
+                    <div class="feature__icon" aria-hidden="true">🌿</div>
+                    <div>
+                        <h3>{{ 'home.snack_title'|trans }}</h3>
+                        <p>{{ 'home.snack_text'|trans }}</p>
+                    </div>
+                </div>
+                <div class="card feature">
+                    <div class="feature__icon" aria-hidden="true">🍷</div>
+                    <div>
+                        <h3>{{ 'home.meal_title'|trans }}</h3>
+                        <p>{{ 'home.meal_text'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ---------- Menu-teksters ---------- #}
+    <section class="section" style="background: var(--bg-alt)">
+        <div class="container">
+            <span class="section-kicker text-center">{{ 'home.kitchen'|trans }}</span>
+            <h2 class="section-title">{{ 'home.favorites'|trans }}</h2>
+
+            {% if featured is empty %}
+                <p class="text-center muted">{{ 'home.menu_empty'|trans }}</p>
+            {% else %}
+                <div class="grid grid--3">
+                    {% for item in featured %}
+                        <article class="card">
+                            <h3 style="margin-bottom:.25rem">{{ item.name|trans({}, 'menu') }}{% if item.alcoholic or item.name == 'Huiswijn (glas)' %} <span class="menu-item__age">{{ 'menu.alcohol'|trans({}, 'menu') }}</span>{% endif %}</h3>
+                            {% if item.category %}<p class="muted" style="margin:0 0 .75rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em">{{ item.category|trans({}, 'menu') }}</p>{% endif %}
+                            {% if item.description %}<p class="muted">{{ item.description|trans({}, 'menu') }}</p>{% endif %}
+                            <p class="price" style="margin-top:.75rem">€&nbsp;{{ (item.priceCents / 100)|number_format(2, app.request.locale == 'en' ? '.' : ',', app.request.locale == 'en' ? ',' : '.') }}</p>
+                        </article>
+                    {% endfor %}
+                </div>
+                <p class="text-center" style="margin-top:2rem">
+                    <a class="btn btn--ghost" href="{{ path('menu') }}">{{ 'home.view_all'|trans }}</a>
+                </p>
+            {% endif %}
+        </div>
+    </section>
+
+    {% include 'home/_floor_plan.html.twig' %}
+
+    {# ---------- Openingstijden & contact ---------- #}
+    <section class="section">
+        <div class="container">
+            <span class="section-kicker text-center">{{ 'home.where'|trans }}</span>
+            <h2 class="section-title">{{ 'home.contact_title'|trans }}</h2>
+
+            <div class="info-grid">
+                <div class="card card--soft">
+                    <h3>{{ 'home.every_day'|trans }}</h3>
+                    <ul class="hours">
+                        {% for entry in restaurant.hours %}
+                            <li class="{{ entry.open is same as(false) ? 'muted' }}">
+                                <span class="day">{{ entry.day|trans }}</span>
+                                <span>{{ entry.time|trans }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="card card--soft">
+                    <h3>{{ 'footer.visit'|trans }}</h3>
+                    <ul class="contact-list">
+                        <li><span class="ic" aria-hidden="true">📍</span><span><strong>{{ 'footer.location'|trans }}</strong><br>{{ restaurant.address.street }}</span></li>
+                        {% if restaurant.phone %}<li><span class="ic" aria-hidden="true">📞</span><span><strong>{{ 'footer.phone'|trans }}</strong><br><a href="tel:{{ restaurant.phone|replace({' ': '', '-': '', '(': '', ')': ''}) }}">{{ restaurant.phone }}</a></span></li>{% endif %}
+                        {% if restaurant.email %}<li><span class="ic" aria-hidden="true">✉️</span><span><strong>{{ 'footer.email'|trans }}</strong><br><a href="mailto:{{ restaurant.email }}">{{ restaurant.email }}</a></span></li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ---------- CTA ---------- #}
+    <section class="section section--tight">
+        <div class="container">
+            <div class="cta-band">
+                <span class="section-kicker" style="color:#fff">{{ 'home.table'|trans }}</span>
+                <h2>{{ 'call.title'|trans }}</h2>
+                <p>{{ (restaurant.phone ? 'call.intro' : 'call.unavailable')|trans }}</p>
+                <div class="hero__actions" style="justify-content:center">
+                    <a class="btn btn--secondary" href="{{ path('reservation_new') }}">{{ 'home.how_book'|trans }}</a>
+                    {% if restaurant.phone %}<a class="btn btn--secondary" href="tel:{{ restaurant.phone|replace({' ': '', '-': '', '(': '', ')': ''}) }}">{{ 'call.phone'|trans({'%phone%': restaurant.phone}) }}</a>{% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

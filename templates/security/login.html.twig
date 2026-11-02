@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'login.title'|trans }}{% endblock %}
+
+{% block body %}
+    <section class="auth">
+        <div class="container">
+            <div class="card auth__card">
+                <div class="auth__mark" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none">
+                            <path d="M24 14v10a4 4 0 0 1-4 4h4v22"/>
+                            <path d="M20 14v6M28 14v6M22 14v4M26 14v4"/>
+                            <path d="M40 14c-3 0-5 2.5-5 6s2 6 5 6 5-2.5 5-6-2-6-5-6z"/>
+                            <path d="M40 26v24"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <span class="section-kicker">{{ 'staff.label'|trans }}</span>
+                <h1 style="font-size:1.75rem;margin-bottom:.25rem">{{ 'login.welcome'|trans }}</h1>
+                <p class="muted" style="margin-bottom:1.5rem">{{ 'login.intro'|trans }}</p>
+
+                {% if error %}
+                    <div class="alert alert--error" role="alert">
+                        <span aria-hidden="true" style="font-size:1.25rem">⚠️</span>
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    </div>
+                {% endif %}
+
+                <form method="post" action="{{ path('app_login') }}" style="text-align:left;grid-template-columns:1fr;display:grid;gap:1rem">
+                    <div class="field">
+                        <label for="username">{{ 'footer.email'|trans }}</label>
+                        <input type="email" id="username" name="_username" value="{{ last_username }}" required autofocus>
+                    </div>
+                    <div class="field">
+                        <label for="password">{{ 'login.password'|trans }}</label>
+                        <input type="password" id="password" name="_password" required>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <button class="btn btn--block" type="submit">{{ 'login.submit'|trans }}</button>
+                </form>
+
+                <p class="auth__hint">{{ 'login.hint'|trans }}</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

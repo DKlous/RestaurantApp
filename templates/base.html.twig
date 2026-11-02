@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ restaurant.name|default('De Gouden Lepel') }}{% endblock %}</title>
+    {% block description %}
+        <meta name="description" content="{{ restaurant.tagline|trans }}">
+    {% endblock %}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/app.css">
+    {% block javascripts %}
+        <script src="/js/app.js" defer></script>
+    {% endblock %}
+</head>
+<body>
+    <a class="skip-link" href="#main">{{ 'nav.skip'|trans }}</a>
+
+    <header class="site-header" id="siteHeader">
+        <div class="container site-header__inner">
+            <a class="brand" href="{{ path('app_home') }}" aria-label="{{ restaurant.name }} — {{ 'nav.home'|trans }}">
+                <span class="brand__mark" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none">
+                            <path d="M24 14v10a4 4 0 0 1-4 4h4v22"/>
+                            <path d="M20 14v6M28 14v6M22 14v4M26 14v4"/>
+                            <path d="M40 14c-3 0-5 2.5-5 6s2 6 5 6 5-2.5 5-6-2-6-5-6z"/>
+                            <path d="M40 26v24"/>
+                        </g>
+                    </svg>
+                </span>
+                <span>{{ restaurant.name }}<small>{{ restaurant.short|trans }}</small></span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="{{ 'nav.toggle'|trans }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                    <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
+                </svg>
+            </button>
+
+            {% set route = app.request.attributes.get('_route')|default('app_home') %}
+            {% if route starts with 'legacy_' %}{% set route = route|slice(7) %}{% endif %}
+            {% if route ends with '.' ~ app.request.locale %}{% set route = route|slice(0, -(app.request.locale|length + 1)) %}{% endif %}
+            <nav class="nav" id="primaryNav" aria-label="{{ 'nav.main'|trans }}">
+                <a class="nav__link{% if route == 'app_home' %} is-active{% endif %}" href="{{ path('app_home') }}">{{ 'nav.home'|trans }}</a>
+                <a class="nav__link{% if route == 'menu' %} is-active{% endif %}" href="{{ path('menu') }}">{{ 'nav.menu'|trans }}</a>
+                <a class="nav__link{% if route == 'reservation_new' %} is-active{% endif %}" href="{{ path('reservation_new') }}">{{ 'nav.reserve'|trans }}</a>
+                {% if is_granted('ROLE_STAFF') %}
+                    <a class="nav__link{% if route in ['reservation_dashboard', 'reservation_create', 'reservation_show'] %} is-active{% endif %}" href="{{ path('reservation_dashboard') }}">{{ 'nav.dashboard'|trans }}</a>
+                {% endif %}
+
+                <span class="nav__spacer"></span>
+
+                <div class="nav__actions">
+                    {% if is_granted('ROLE_STAFF') %}
+                        <span class="nav__user"><span class="dot" aria-hidden="true"></span>{{ app.user.email }}</span>
+                        <a class="btn btn--ghost btn--sm" href="{{ path('app_logout') }}">{{ 'nav.logout'|trans }}</a>
+                    {% else %}
+                        <a class="btn btn--secondary btn--sm" href="{{ path('app_login') }}">{{ 'nav.login'|trans }}</a>
+                    {% endif %}
+                </div>
+                <details class="language-switch">
+                    <summary aria-label="{{ 'nav.language'|trans }}">🌐 {{ app.request.locale|upper }}</summary>
+                    <ul aria-label="{{ 'nav.language'|trans }}">
+                        {% for locale, language in {'nl': 'Nederlands', 'en': 'English', 'de': 'Deutsch', 'fr': 'Français', 'it': 'Italiano'} %}
+                            <li><a href="{{ path(route, app.request.query.all|merge(app.request.attributes.get('_route_params')|default({}))|merge({'_locale': locale})) }}" lang="{{ locale }}" hreflang="{{ locale }}"{% if locale == app.request.locale %} aria-current="true"{% endif %}>{{ language }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </nav>
+        </div>
+    </header>
+
+    <div class="flash-region" aria-live="polite">
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash flash--{{ type }}" role="status">
+                    <span class="flash__icon" aria-hidden="true">{{ type == 'success' ? '✓' : type == 'error' ? '✕' : '!' }}</span>
+                    <div>
+                        <div class="flash__title">{{ (type == 'success' ? 'flash.success' : type == 'error' ? 'flash.error' : 'flash.notice')|trans }}</div>
+                        <div class="flash__message">{{ message|trans }}</div>
+                    </div>
+                    <button class="flash__close" type="button" aria-label="{{ 'flash.close'|trans }}">×</button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <main id="main">
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <a class="brand" href="{{ path('app_home') }}" style="color:#f1dfd2">
+                    <span class="brand__mark" aria-hidden="true">
+                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                            <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none">
+                                <path d="M24 14v10a4 4 0 0 1-4 4h4v22"/>
+                                <path d="M20 14v6M28 14v6M22 14v4M26 14v4"/>
+                                <path d="M40 14c-3 0-5 2.5-5 6s2 6 5 6 5-2.5 5-6-2-6-5-6z"/>
+                                <path d="M40 26v24"/>
+                            </g>
+                        </svg>
+                    </span>
+                    <span>{{ restaurant.name }}<small style="color:#c98a2e">{{ restaurant.short|trans }}</small></span>
+                </a>
+                <p class="footer-note" style="margin-top:1rem">{{ restaurant.about|trans }}</p>
+            </div>
+
+            <div>
+                <h4>{{ 'footer.links'|trans }}</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ path('app_home') }}">{{ 'nav.home'|trans }}</a></li>
+                    <li><a href="{{ path('menu') }}">{{ 'nav.menu'|trans }}</a></li>
+                    <li><a href="{{ path('reservation_new') }}">{{ 'nav.reserve'|trans }}</a></li>
+                    <li><a href="{{ path('app_login') }}">{{ 'nav.login'|trans }}</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>{{ 'footer.visit'|trans }}</h4>
+                <ul class="contact-list" style="color:#d8c7b1">
+                    <li><span class="ic" aria-hidden="true">📍</span><span><strong>{{ 'footer.location'|trans }}</strong>{{ restaurant.address.street }}</span></li>
+                    {% if restaurant.phone %}<li><span class="ic" aria-hidden="true">📞</span><span><strong>{{ 'footer.phone'|trans }}</strong><a href="tel:{{ restaurant.phone|replace({' ': '', '-': '', '(': '', ')': ''}) }}">{{ restaurant.phone }}</a></span></li>{% endif %}
+                    {% if restaurant.email %}<li><span class="ic" aria-hidden="true">✉️</span><span><strong>{{ 'footer.email'|trans }}</strong><a href="mailto:{{ restaurant.email }}">{{ restaurant.email }}</a></span></li>{% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <span>© <span id="year">2026</span> {{ restaurant.name }}. {{ 'footer.rights'|trans }}</span>
+            <span>{{ 'footer.made'|trans }} Symfony 8 · Doctrine · Twig · MariaDB</span>
+        </div>
+    </footer>
+</body>
+</html>

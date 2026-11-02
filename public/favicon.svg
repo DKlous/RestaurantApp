@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="16" fill="#c0562a"/>
+  <g stroke="#fff" stroke-width="3.5" stroke-linecap="round" fill="none">
+    <!-- vork -->
+    <path d="M24 14v10a4 4 0 0 1-4 4h4v22"/>
+    <path d="M20 14v6M28 14v6M22 14v4M26 14v4"/>
+    <!-- lepel -->
+    <path d="M40 14c-3 0-5 2.5-5 6s2 6 5 6 5-2.5 5-6-2-6-5-6z"/>
+    <path d="M40 26v24"/>
+  </g>
+</svg>

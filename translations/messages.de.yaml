@@ -1,0 +1,140 @@
+restaurant:
+    short: 'Café · Restaurant · 24/7'
+    tagline: 'Kaffee, Panini und andere Favoriten — Tag und Nacht'
+    about: 'Im De Gouden Lepel genießen Sie jederzeit Kaffee, Panini, Snacks, Pizza und Pasta.'
+    contact_note: 'Diese Demonstrationsnummer ist nicht verifiziert und muss ersetzt werden. Der genaue Standort am Flughafen Schiphol ist noch nicht bestätigt.'
+    open_24: '24 Stunden geöffnet'
+days: { monday: Montag, tuesday: Dienstag, wednesday: Mittwoch, thursday: Donnerstag, friday: Freitag, saturday: Samstag, sunday: Sonntag }
+nav:
+    skip: 'Zum Inhalt'
+    home: Startseite
+    menu: Speisekarte
+    reserve: Reservieren
+    dashboard: Dashboard
+    login: 'Personal anmelden'
+    logout: Abmelden
+    language: Sprache
+    main: Hauptnavigation
+    toggle: 'Menü öffnen und schließen'
+flash:
+    success: Erfolg
+    error: Problem
+    notice: Hinweis
+    close: 'Meldung schließen'
+    reserved: 'Der Tisch ist für diesen Zeitraum reserviert.'
+    status_changed: 'Reservierung %id% ist jetzt %status%.'
+footer:
+    links: Navigation
+    visit: 'Besuch & Kontakt'
+    location: Standort
+    phone: Telefon
+    email: E-Mail
+    rights: 'Alle Rechte vorbehalten.'
+    made: 'Erstellt mit'
+home:
+    description: 'Kaffee, Panini, Snacks, Pizza und Pasta im De Gouden Lepel. Tag und Nacht geöffnet.'
+    kicker: 'Café · Restaurant · Schiphol Airport · 24/7'
+    hero: 'Kaffee, Panini und etwas Leckeres — Tag und Nacht.'
+    view_menu: 'Speisekarte ansehen'
+    open: 'Tag und Nacht geöffnet'
+    about: 'Über uns'
+    about_title: 'Immer Zeit für etwas Leckeres'
+    coffee_title: 'Kaffee, wann immer Sie möchten'
+    coffee_text: 'Beginnen Sie Ihren Tag mit frischem Kaffee oder wärmen Sie sich mitten in der Nacht auf.'
+    snack_title: 'Panini & Snacks'
+    snack_text: 'Ein schneller Imbiss oder ein reich belegtes Panini: Es gibt immer etwas für Sie.'
+    meal_title: 'Pizza, Pasta & mehr'
+    meal_text: 'Genießen Sie zu jeder Tageszeit eine warme Mahlzeit.'
+    kitchen: 'Aus unserer Küche'
+    favorites: 'Einige Favoriten'
+    menu_empty: 'Die Speisekarte wird aktualisiert. Besuchen Sie uns gerne.'
+    view_all: 'Ganze Speisekarte ansehen'
+    where: 'Wo & wann'
+    contact_title: '24/7 geöffnet & Kontakt'
+    every_day: 'Jeden Tag, Tag und Nacht'
+    table: 'Einen Tisch reservieren'
+    how_book: 'So reservieren Sie'
+floor_plan:
+    kicker: 'Finden Sie Ihren Platz'
+    title: 'Ein Blick in unser Café'
+    intro: 'Finden Sie einen Tisch im Innenbereich oder auf der Terrasse.'
+    inside: Innenbereich
+    outside: Terrasse
+    counter: Kaffeebar
+    entrance: Eingang
+    table_number: 'Tisch %number%'
+    seat: Sitzplatz
+    seats: Sitzplätze
+    scroll: 'Seitlich scrollen, um den ganzen Grundriss zu sehen.'
+    empty: 'Fragen Sie unser Team nach den Tischen.'
+    other_tables: 'Fragen Sie unser Team nach weiteren Tischen.'
+    availability: 'Rufen Sie uns an, um die Verfügbarkeit zu prüfen und einen Tisch zu reservieren.'
+call:
+    title: 'Telefonisch reservieren'
+    description: 'Reservieren Sie telefonisch bei %name%. Wir sind rund um die Uhr geöffnet.'
+    open: '24 Stunden geöffnet · 7 Tage die Woche'
+    heading: 'Einen Tisch reservieren? Wir helfen gerne.'
+    intro: 'Ein Mitarbeiter bespricht Ihren Besuch und notiert den Tisch und den Zeitraum.'
+    unavailable: 'Die Telefonnummer ist derzeit nicht verfügbar.'
+    phone: '%phone% anrufen'
+    how: 'So funktioniert es'
+    steps: 'In drei Schritten erledigt'
+    step1: 'Rufen Sie uns an'
+    step1_text: 'Teilen Sie uns mit, wann und mit wie vielen Personen Sie kommen möchten.'
+    step2: 'Tisch abstimmen'
+    step2_text: 'Ein Mitarbeiter wählt einen verfügbaren Tisch für Ihre Gruppe.'
+    step3: 'Wir notieren Ihre Reservierung'
+    step3_text: 'Das Team erfasst Tischnummer und Zeitraum.'
+    menu_hint: 'Möchten Sie zuerst die Speisekarte ansehen?'
+login:
+    title: 'Anmelden — Personal'
+    welcome: 'Willkommen zurück'
+    intro: 'Melden Sie sich an, um Reservierungen zu verwalten.'
+    password: Passwort
+    submit: Anmelden
+    hint: 'Keine Zugangsdaten? Fragen Sie die Restaurantverwaltung.'
+status: { pending: 'Ausstehend', confirmed: Reserviert, cancelled: Storniert, unknown: Unbekannt }
+staff:
+    label: Personal
+    reservations: Reservierungen
+    reservation: Reservierung
+    dashboard_intro: 'Tischbelegung ansehen und den Status jeder Reservierung verwalten.'
+    book_table: 'Tisch reservieren'
+    total: Gesamt
+    empty: 'Noch keine Reservierungen'
+    empty_text: 'Telefonische Buchungen erscheinen hier, sobald sie erfasst werden.'
+    table: Tisch
+    choose_table: 'Tisch auswählen'
+    guests: Gäste
+    date: Datum
+    time: Uhrzeit
+    start_time: Beginn
+    duration: Dauer
+    duration_label: 'Dauer (Minuten)'
+    status: Status
+    change_status: 'Status ändern'
+    reservation_status: 'Status der Reservierung %id%'
+    change: Ändern
+    details: 'Personal · Reservierungsdetails'
+    minutes: '%count% Minuten'
+    back: 'Zurück zum Dashboard'
+    new: 'Neue Reservierung'
+    new_kicker: 'Personal · neue Reservierung'
+    new_intro: 'Tragen Sie die telefonische Buchung ein. Beim Speichern wird der Tisch sofort für diesen Zeitraum reserviert.'
+    check: 'Reservierung überprüfen:'
+    duration_hint: 'Standard 90 Minuten; maximal 24 Stunden.'
+    good_to_know: 'Gut zu wissen'
+    availability: 'Verfügbarkeit wird geprüft'
+    availability_text: 'Der Tisch wird sofort bestätigt und für den gesamten Zeitraum blockiert, auch über Mitternacht.'
+    change_text: 'Reservierungen können später im Dashboard storniert oder geändert werden. Angrenzende Zeiträume sind zulässig.'
+    hours_text: 'Wir sind rund um die Uhr geöffnet; Reservierungszeiten sind nicht eingeschränkt.'
+errors:
+    duration: 'Die Reservierungsdauer muss zwischen 15 Minuten und 24 Stunden liegen.'
+    unavailable: 'Dieser Tisch ist nicht verfügbar.'
+    past: 'Datum und Uhrzeit dürfen nicht in der Vergangenheit liegen.'
+    overlap: 'Dieser Tisch ist gegen %time% bereits reserviert.'
+    choose_table: 'Wählen Sie einen Tisch.'
+    guests_required: 'Geben Sie die Anzahl der Gäste ein.'
+    capacity: 'Die Gästezahl (%guests%) muss für diesen Tisch zwischen 1 und %capacity% liegen.'
+    choose_before_save: 'Wählen Sie vor dem Speichern einen Tisch.'
+    no_table: 'Dieser Reservierung ist kein Tisch zugeordnet.'

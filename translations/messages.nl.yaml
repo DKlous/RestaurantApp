@@ -1,0 +1,140 @@
+restaurant:
+    short: 'Café · restaurant · 24/7'
+    tagline: 'Koffie, panini en andere favorieten — dag en nacht'
+    about: 'Bij De Gouden Lepel kun je op ieder moment terecht voor koffie, panini, snacks, pizza en pasta.'
+    contact_note: 'Dit demonstratienummer is niet geverifieerd en moet worden aangepast. De exacte locatie op Schiphol is nog niet bevestigd.'
+    open_24: '24 uur open'
+days: { monday: Maandag, tuesday: Dinsdag, wednesday: Woensdag, thursday: Donderdag, friday: Vrijdag, saturday: Zaterdag, sunday: Zondag }
+nav:
+    skip: 'Naar de inhoud'
+    home: Home
+    menu: 'Het menu'
+    reserve: Reserveren
+    dashboard: Dashboard
+    login: 'Personeel inloggen'
+    logout: Uitloggen
+    language: Taal
+    main: Hoofdmenu
+    toggle: 'Menu openen en sluiten'
+flash:
+    success: Gelukt
+    error: Probleem
+    notice: 'Let op'
+    close: 'Melding sluiten'
+    reserved: 'De tafel is voor dit tijdvak gereserveerd.'
+    status_changed: 'Reservering %id% is nu %status%.'
+footer:
+    links: Naar
+    visit: 'Bezoek & contact'
+    location: Locatie
+    phone: Telefoon
+    email: E-mail
+    rights: 'Alle rechten voorbehouden.'
+    made: 'Gemaakt met'
+home:
+    description: 'Koffie, panini, snacks, pizza en pasta bij De Gouden Lepel. Dag en nacht geopend.'
+    kicker: 'Café · restaurant · Schiphol Airport · 24/7'
+    hero: 'Koffie, panini en iets lekkers — dag en nacht.'
+    view_menu: 'Bekijk het menu'
+    open: 'Dag en nacht geopend'
+    about: 'Over ons'
+    about_title: 'Altijd tijd voor iets lekkers'
+    coffee_title: 'Koffie, precies wanneer jij wilt'
+    coffee_text: 'Begin je dag met een verse kop koffie of warm er midden in de nacht mee op.'
+    snack_title: 'Panini & snacks'
+    snack_text: 'Een snelle hap of een goedgevulde panini: er staat altijd iets voor je klaar.'
+    meal_title: 'Pizza, pasta & meer'
+    meal_text: 'Schuif aan voor een warme maaltijd op elk uur van de dag.'
+    kitchen: 'Uit onze keuken'
+    favorites: 'Een paar favorieten'
+    menu_empty: 'De menukaart wordt bijgewerkt. Kom gerust langs.'
+    view_all: 'Heel het menu bekijken'
+    where: 'Waar & wanneer'
+    contact_title: '24/7 open & contact'
+    every_day: 'Iedere dag, dag en nacht'
+    table: 'Een tafel regelen'
+    how_book: 'Zo reserveer je'
+floor_plan:
+    kicker: 'Kies je plekje'
+    title: 'Een kijkje in ons café'
+    intro: 'Zoek een tafel binnen of neem plaats op het terras.'
+    inside: Binnen
+    outside: Terras
+    counter: 'Koffiebar'
+    entrance: Ingang
+    table_number: 'Tafel %number%'
+    seat: zitplaats
+    seats: zitplaatsen
+    scroll: 'Schuif opzij om de hele plattegrond te bekijken.'
+    empty: 'Vraag ons team naar de tafels.'
+    other_tables: 'Vraag ons team naar de andere tafels.'
+    availability: 'Bel ons om de beschikbaarheid te bespreken en een tafel te reserveren.'
+call:
+    title: 'Telefonisch reserveren'
+    description: 'Reserveer telefonisch bij %name%. We zijn 24 uur per dag, 7 dagen per week geopend.'
+    open: '24 uur open · 7 dagen per week'
+    heading: 'Een tafel reserveren? We helpen je graag.'
+    intro: 'Een medewerker bespreekt je bezoek en noteert de tafel en het tijdvak.'
+    unavailable: 'Het telefoonnummer is momenteel niet beschikbaar.'
+    phone: 'Bel %phone%'
+    how: 'Zo werkt het'
+    steps: 'In drie stappen geregeld'
+    step1: 'Bel ons'
+    step1_text: 'Vertel wanneer je wilt komen en met hoeveel personen.'
+    step2: 'Stem de tafel af'
+    step2_text: 'Een medewerker kiest een beschikbare tafel die bij je gezelschap past.'
+    step3: 'Wij noteren je reservering'
+    step3_text: 'Het team legt het tafelnummer en tijdvak vast.'
+    menu_hint: 'Liever eerst de kaart bekijken?'
+login:
+    title: 'Inloggen — Personeel'
+    welcome: 'Welkom terug'
+    intro: 'Log in om reserveringen te beheren.'
+    password: Wachtwoord
+    submit: Aanmelden
+    hint: 'Geen inloggegevens? Vraag ze aan bij de beheerder van het restaurant.'
+status: { pending: 'Te bevestigen', confirmed: Gereserveerd, cancelled: Geannuleerd, unknown: Onbekend }
+staff:
+    label: Personeel
+    reservations: Reserveringen
+    reservation: Reservering
+    dashboard_intro: 'Bekijk tafelbezetting en beheer de status van iedere afspraak.'
+    book_table: 'Tafel reserveren'
+    total: Totaal
+    empty: 'Nog geen reserveringen'
+    empty_text: 'Telefonische afspraken verschijnen hier zodra je ze vastlegt.'
+    table: Tafel
+    choose_table: 'Kies een tafel'
+    guests: 'Aantal gasten'
+    date: Datum
+    time: Tijd
+    start_time: Begintijd
+    duration: Duur
+    duration_label: 'Duur (minuten)'
+    status: Status
+    change_status: 'Status wijzigen'
+    reservation_status: 'Status reservering %id%'
+    change: Wijzig
+    details: 'Personeel · reserveringsdetails'
+    minutes: '%count% minuten'
+    back: 'Terug naar dashboard'
+    new: 'Nieuwe reservering'
+    new_kicker: 'Personeel · nieuwe reservering'
+    new_intro: 'Vul de telefonisch gemaakte afspraak in. Opslaan reserveert de tafel direct voor dit tijdvak.'
+    check: 'Controleer de reservering:'
+    duration_hint: 'Standaard 90 minuten; maximaal 24 uur.'
+    good_to_know: 'Goed om te weten'
+    availability: 'Beschikbaarheid wordt gecontroleerd'
+    availability_text: 'De tafel wordt meteen bevestigd en gedurende de volledige gekozen tijd geblokkeerd, ook over middernacht.'
+    change_text: 'Je kunt een reservering later annuleren of wijzigen in het dashboard. Aansluitende tijdvakken zijn toegestaan.'
+    hours_text: 'De zaak is 24/7 open; er zijn geen beperkingen op reserveringstijden.'
+errors:
+    duration: 'De reserveringsduur moet tussen 15 minuten en 24 uur liggen.'
+    unavailable: 'Deze tafel is niet beschikbaar.'
+    past: 'Datum en tijd mogen niet in het verleden liggen.'
+    overlap: 'Deze tafel is rond %time% al gereserveerd.'
+    choose_table: 'Kies een tafel.'
+    guests_required: 'Geef het aantal gasten op.'
+    capacity: 'Het aantal gasten (%guests%) moet tussen 1 en %capacity% liggen voor deze tafel.'
+    choose_before_save: 'Kies een tafel voordat de reservering wordt opgeslagen.'
+    no_table: 'Bij deze reservering hoort geen tafel.'

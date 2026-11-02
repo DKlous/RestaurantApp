@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'menu.title'|trans({}, 'menu') }} — {{ restaurant.name }}{% endblock %}
+{% block description %}
+    <meta name="description" content="{{ 'menu.intro'|trans({}, 'menu') }}">
+{% endblock %}
+
+{% block body %}
+
+    <section class="section" lang="{{ app.request.locale|replace({'_': '-'}) }}">
+        <div class="container" style="max-width:70rem">
+            <span class="section-kicker text-center">{{ 'menu.kicker'|trans({}, 'menu') }}</span>
+            <h1 class="section-title">{{ 'menu.title'|trans({}, 'menu') }}</h1>
+            <p class="section-intro">{{ 'menu.intro'|trans({}, 'menu') }}</p>
+            <p class="menu-safety">{{ 'menu.allergen_advice'|trans({}, 'menu') }}</p>
+
+            <details class="menu-allergen-guide">
+                <summary>{{ 'menu.allergen_guide'|trans({}, 'menu') }}</summary>
+                <p>{{ 'menu.allergen_guide_intro'|trans({}, 'menu') }}</p>
+                <ul>
+                    {% for allergen in ['gluten', 'crustaceans', 'eggs', 'fish', 'peanuts', 'soy', 'milk', 'nuts', 'celery', 'mustard', 'sesame', 'sulphites', 'lupin', 'molluscs'] %}
+                        <li>{{ ('allergen.' ~ allergen)|trans({}, 'menu') }}</li>
+                    {% endfor %}
+                </ul>
+            </details>
+
+            {% if items is empty %}
+                <div class="card empty">
+                    <div class="empty__icon" aria-hidden="true">🍽️</div>
+                    <h2>{{ 'menu.empty_title'|trans({}, 'menu') }}</h2>
+                    <p class="muted">{{ 'menu.empty_text'|trans({}, 'menu') }}</p>
+                    <a class="btn" href="{{ path('reservation_new') }}">{{ 'menu.reserve'|trans({}, 'menu') }}</a>
+                </div>
+            {% else %}
+                {% set grouped = groupedItems %}
+
+                <nav class="menu-filter" aria-label="{{ 'menu.categories'|trans({}, 'menu') }}" hidden>
+                    <button class="menu-filter__btn is-active" type="button" data-filter="all" aria-pressed="true">{{ 'menu.all'|trans({}, 'menu') }}</button>
+                    {% for catLabel in grouped|keys %}
+                        <button class="menu-filter__btn" type="button" data-filter="{{ loop.index }}" aria-pressed="false">{{ catLabel ? catLabel|trans({}, 'menu') : 'menu.uncategorized'|trans({}, 'menu') }}</button>
+                    {% endfor %}
+                </nav>
+
+                {% for catLabel, catItems in grouped %}
+                    <section class="menu-section" data-category="{{ loop.index }}">
+                        <h2>{{ catLabel ? catLabel|trans({}, 'menu') : 'menu.uncategorized'|trans({}, 'menu') }}</h2>
+                        <ul class="menu-list">
+                            {% for item in catItems %}
+                                <li class="menu-item">
+                                    <details class="menu-item__details">
+                                        <summary class="menu-item__head">
+                                            <span class="menu-item__name"><span class="menu-item__arrow" aria-hidden="true">▸</span> {{ item.name|trans({}, 'menu') }}{% if item.alcoholic or item.name == 'Huiswijn (glas)' %} <span class="menu-item__age">{{ 'menu.alcohol'|trans({}, 'menu') }}</span>{% endif %}<span class="visually-hidden"> — {{ 'menu.details'|trans({}, 'menu') }}</span></span>
+                                            <span class="menu-item__price"><span class="visually-hidden">{{ 'menu.price'|trans({}, 'menu') }}: </span>€&nbsp;{{ (item.priceCents / 100)|number_format(2, app.request.locale == 'en' ? '.' : ',', app.request.locale == 'en' ? ',' : '.') }}</span>
+                                            {% if item.category == 'Pizza' or item.name starts with 'Pizza ' or item.name starts with 'Kinderpizza' %}
+                                                {% set originalParts = item.description ? item.description|split(' · ') : [] %}
+                                                {% set translatedParts = item.description ? item.description|trans({}, 'menu')|split(' · ') : [] %}
+                                                <span class="menu-item__size">
+                                                    {% if originalParts|length == 3 and translatedParts|length == 3 and originalParts[1] matches '/^Ø [0-9]+([.,][0-9]+)? cm$/' and originalParts[2] matches '/^bodemdikte [0-9]+([.,][0-9]+)? cm$/' %}
+                                                        {{ translatedParts[1] }} · {{ translatedParts[2] }}
+                                                    {% else %}
+                                                        {{ 'menu.pizza_dimensions_unknown'|trans({}, 'menu') }}
+                                                    {% endif %}
+                                                </span>
+                                            {% endif %}
+                                            {% if item.dietaryLabels %}
+                                                <span class="menu-item__dietary">
+                                                    <span class="visually-hidden">{{ 'menu.dietary'|trans({}, 'menu') }}: </span>
+                                                    {% for label in item.dietaryLabels %}
+                                                        {% if label in ['vegetarian', 'vegan', 'halal', 'kosher', 'gluten_free'] %}
+                                                            <span class="menu-item__diet">{{ ('diet.' ~ label)|trans({}, 'menu') }}</span>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                            {% endif %}
+                                        </summary>
+                                        <div class="menu-item__body">
+                                            <section class="menu-item__section">
+                                                <h3 class="menu-item__label">{{ 'menu.description'|trans({}, 'menu') }}</h3>
+                                                <p>{{ item.description ? item.description|trans({}, 'menu') : 'menu.description_unknown'|trans({}, 'menu') }}</p>
+                                                {% if item.allergens is null and item.description %}<p class="menu-item__additional">{{ 'menu.ingredients_unknown'|trans({}, 'menu') }}</p>{% endif %}
+                                            </section>
+                                            <section class="menu-item__section">
+                                                <h3 class="menu-item__label">{{ 'menu.allergens'|trans({}, 'menu') }}</h3>
+                                                {% if item.allergens is null %}
+                                                    <p>{{ 'menu.allergens_unknown'|trans({}, 'menu') }}</p>
+                                                {% elseif item.allergens is empty %}
+                                                    <p>{{ 'menu.allergens_none'|trans({}, 'menu') }}</p>
+                                                {% else %}
+                                                    <ul class="menu-item__allergens">
+                                                        {% for allergen in item.allergens %}<li>{{ ('allergen.' ~ allergen)|trans({}, 'menu') }}</li>{% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </section>
+                                        </div>
+                                    </details>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                {% endfor %}
+
+                <div class="text-center" style="margin-top:2.5rem">
+                    <a class="btn" href="{{ path('reservation_new') }}">
+                        {{ 'menu.reserve'|trans({}, 'menu') }}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}

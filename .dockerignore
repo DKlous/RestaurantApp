@@ -1,0 +1,10 @@
+vendor/
+var/
+.git/
+.idea/
+.vscode/
+.phpunit.*
+.cache/
+node_modules/
+.env.local
+.env.*.local

@@ -1,0 +1,61 @@
+services:
+# ---------------------------------------------------------------------------
+# Database: MariaDB 11.4
+# ---------------------------------------------------------------------------
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"        # naar de host gepubliceerd voor lokale tooling / GUI-DB-client
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+# ---------------------------------------------------------------------------
+# Applicatie: PHP-FPM 8.5
+# ---------------------------------------------------------------------------
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # De container praat met MariaDB via de interne hostname 'db'.
+      # Dit overschrijft de hostwaarde in .env (127.0.0.1) binnen de container.
+      APP_ENV: dev
+      APP_DEBUG: "1"
+      DATABASE_URL: "mysql://${MARIADB_USER}:${MARIADB_PASSWORD}@db:3306/${MARIADB_DATABASE}?charset=utf8mb4"
+    volumes:
+      # Volledige codebase (bron + vendor + var) naar de container
+      - .:/var/www
+    working_dir: /var/www
+    restart: unless-stopped
+
+# ---------------------------------------------------------------------------
+# Webserver: Nginx (reverse proxy + statische bestanden)
+# ---------------------------------------------------------------------------
+  web:
+    image: nginx:1.27-alpine
+    depends_on:
+      - php
+    ports:
+      - "8080:80"            # http://localhost:8080/
+    volumes:
+      - .:/var/www:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+
+volumes:
+  db_data:

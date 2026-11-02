@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'staff.reservation'|trans }} #{{ reservation.id }} — {{ restaurant.name }}{% endblock %}
+
+{% block body %}
+    {% set status = {
+        'pending': ['status.pending', 'badge--pending'],
+        'confirmed': ['status.confirmed', 'badge--confirmed'],
+        'cancelled': ['status.cancelled', 'badge--cancelled']
+    } %}
+    {% set currentStatus = status[reservation.status] ?? ['status.unknown', ''] %}
+
+    <section class="section">
+        <div class="container reservation-detail">
+            <div class="card">
+                <span class="section-kicker">{{ 'staff.details'|trans }}</span>
+                <h1>{{ 'staff.reservation'|trans }} #{{ reservation.id }}</h1>
+                <p><span class="badge {{ currentStatus[1] }}">{{ currentStatus[0]|trans }}</span></p>
+
+                <dl class="confirm__summary">
+                    <div class="summary-row"><dt>{{ 'staff.table'|trans }}</dt><dd>{{ reservation.table.name }}</dd></div>
+                    <div class="summary-row"><dt>{{ 'staff.date'|trans }}</dt><dd>{{ reservation.date|date('d-m-Y') }}</dd></div>
+                    <div class="summary-row"><dt>{{ 'staff.start_time'|trans }}</dt><dd>{{ reservation.time|date('H:i') }}</dd></div>
+                    <div class="summary-row"><dt>{{ 'staff.duration'|trans }}</dt><dd>{{ 'staff.minutes'|trans({'%count%': reservation.durationMinutes}) }}</dd></div>
+                    <div class="summary-row"><dt>{{ 'staff.guests'|trans }}</dt><dd>{{ reservation.guests }}</dd></div>
+                </dl>
+
+                <div class="form-actions">
+                    <a class="btn" href="{{ path('reservation_dashboard') }}">{{ 'staff.back'|trans }}</a>
+                    <a class="btn btn--ghost" href="{{ path('reservation_create') }}">{{ 'staff.new'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
